@@ -6,6 +6,7 @@
 .project
 .idea
 .idea_modules
+*.iml
 Thumbs.db
 .lib
 # sbt

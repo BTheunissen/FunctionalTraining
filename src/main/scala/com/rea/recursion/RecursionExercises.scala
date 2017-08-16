@@ -102,6 +102,7 @@ object RecursionExercises {
 
   // Maximum of the empty list is 0
   def maximum(x: List[Int]): Int = {
+    @tailrec
     def maximumHelper(x: List[Int], runningMax: Int) : Int = x match {
       case Nil => runningMax
       case _ => maximumHelper(x.tail, Math.max(x.head, runningMax))
@@ -111,10 +112,11 @@ object RecursionExercises {
 
   // Reverse a list
   def reverse[A](x: List[A]): List[A] = {
-    if(x.isEmpty) {
-      Nil
-    } else {
-      reverse[A](x.tail):::List(x.head)
+    @tailrec
+    def reverseHelper(x: List[A], runningList: List[A]) : List[A] = x match {
+      case Nil => runningList
+      case _ => reverseHelper(x.tail, x.head::runningList)
     }
+    reverseHelper(x, Nil)
   }
 }

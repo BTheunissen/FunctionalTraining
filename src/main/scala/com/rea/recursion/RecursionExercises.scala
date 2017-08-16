@@ -75,7 +75,8 @@ object RecursionExercises {
 
   // This pattern should be familiar by now... psst... look at add.
   def append[A](x: List[A], y: List[A]): List[A] = x match {
-    case Nil => if(y.nonEmpty) y.head::append(x, y.tail) else Nil
+    case Nil if y.nonEmpty => y.head::append(x, y.tail)
+    case Nil => Nil
     case _ => x.head::append(x.tail, y)
   }
 

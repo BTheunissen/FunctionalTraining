@@ -64,11 +64,23 @@ object OptionalExercises1 {
 
   val config = Map[String, String]("host" -> "rea.com", "port" -> "8080")
 
-  def getFromConfig(key: String): Option[String] = ???
+  def getFromConfig(key: String): Option[String] = config.get(key)
 
-  def lengthOfHost(): Option[Int] = ???
+  def lengthOfHost(): Option[Int] = {
+    val keyOption = getFromConfig("host")
+    keyOption match {
+      case Some(str: String) => Option(str.length)
+      case None => Option(0)
+    }
+  }
 
-  def portPlus1000(): Option[Int] = ???
+  def portPlus1000(): Option[Int] = {
+    val keyOption = getFromConfig("port")
+    keyOption match {
+      case Some(str: String) => Option(str.toInt + 1000)
+      case None => Option(0)
+    }
+  }
 }
 
 object OptionalExercises2 {
@@ -77,11 +89,21 @@ object OptionalExercises2 {
   val envs = Map("rea.com" -> "prod", "test.rea.com" -> "test", "amazon.com" -> "stage")
 
   // Should return the host string if successful or "couldn't resolve" if unsuccessful
-  def getEnvForHost(host: String): String = ???
+  def getEnvForHost(host: String): String = hosts.get(host) match {
+    case Some(hostName : String) => envs.get(hostName) match {
+      case Some(envName: String) => envName
+      case _ => "couldn't resolve"
+    }
+    case _ => "couldn't resolve"
+  }
 
   // See how many ways you can implement this.
   // Will either return "Connected to <rea host>" or "not connected"
-  def connectToReaHostsOnly(host: String): String = ???
+  def connectToReaHostsOnly(host: String): String = hosts.get(host) match {
+    case Some(hostName : String) if hostName.split('.').contains("rea")
+      => createConnection(hostName)
+    case _ => "not connected"
+  }
 
   def createConnection(domain: String): String = s"connected to $domain"
 }
